@@ -9,7 +9,16 @@ import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
 
-const pkgName = 'app-utils'
+import pkg from './package.json' assert { type: 'json' };
+
+const pkgName = pkg.name
+const banner = `
+/**
+ * ${pkg.name} v${pkg.version}
+ * (c) 1990-${new Date().getFullYear()} ${pkg.author}
+ * Released under the MIT License.
+ */
+`
 
 export default defineConfig({
     input: './src/index.ts', // 入口文件
@@ -39,6 +48,7 @@ export default defineConfig({
             file: `public/${pkgName}.min.js`,
             format: 'iife',
             sourcemap: true,
+            banner,
             // plugins: [terser()]
         }
     ],
