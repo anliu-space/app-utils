@@ -26,25 +26,25 @@ export default defineConfig({
         {
             format: 'cjs', // 打包为commonjs格式
             file: `dist/${pkgName}.cjs.js`, // 打包后的文件路径名称
-            name: 'appUtils', // 打包后的默认导出文件名称
+            name: 'dkalAppUtils', // 打包后的默认导出文件名称
             plugins: [terser()]
         },
         {
             format: 'esm', // 打包为esm格式
             file: `dist/${pkgName}.esm.js`,
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             plugins: [terser()]
         },
         {
             format: 'umd', // 打包为umd通用格式
             file: `dist/${pkgName}.umd.js`,
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             minifyInternalExports: true,
             plugins: [terser()]
         },
         // 打包给public展示demo目录使用
         {
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             file: `public/${pkgName}.min.js`,
             format: 'iife',
             sourcemap: true,

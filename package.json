@@ -1,9 +1,9 @@
 {
-  "name": "app-utils",
+  "name": "dkal-app-utils",
   "version": "1.0.0",
-  "description": "this package is an app-utils for \"hc mobile web app\"",
+  "description": "this package is an dkal-app-utils for \"hc mobile web app\"",
   "keywords": [
-    "app-utils",
+    "dkal-app-utils",
     "utils"
   ],
   "author": "anliu-space",
@@ -13,11 +13,14 @@
     "watch": "rollup -c -w",
     "dev": "npm-run-all --parallel start watch",
     "start": "serve public",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pack-dir": "pnpm pack --pack-destination dist",
+    "login-hc": "pnpm login --registry http://10.44.219.76:8082/repository/npm-hosted",
+    "publish-hc": "pnpm publish --registry http://10.44.219.76:8082/repository/npm-hosted --no-git-checks"
   },
-  "main": "dist/app-utils.cjs.js",
-  "module": "dist/app-utils.esm.js",
-  "browser": "dist/app-utils.umd.js",
+  "main": "dist/dkal-app-utils.cjs.js",
+  "module": "dist/dkal-app-utils.esm.js",
+  "browser": "dist/dkal-app-utils.umd.js",
   "types": "src/index.d.ts",
   "type": "module",
   "files": [

@@ -1,17 +1,17 @@
-# app-utils
-this package is an app-utils for "hc mobile web app"
+# dkal-app-utils
+this package is an dkal-app-utils for "hc mobile web app"
 
 
 
 # 1. 创建git项目
 
-项目名称： `app-utils`
+项目名称： `dkal-app-utils`
 
 # 2. 本地初始化项目
 
 ```shell
-> git clone "项目地址/app-utils"
-> cd app-utils/
+> git clone "项目地址/dkal-app-utils"
+> cd dkal-app-utils/
 > pnpm init
 ```
 
@@ -19,11 +19,11 @@ this package is an app-utils for "hc mobile web app"
 
 ```json
 {
-  "name": "app-utils",
+  "name": "dkal-app-utils",
   "version": "1.0.0",
-  "description": "this package is an app-utils for \"hc mobile web app\"",
+  "description": "this package is an dkal-app-utils for \"hc mobile web app\"",
   "keywords": [
-    "app-utils",
+    "dkal-app-utils",
     "utils"
   ],
   "author": "anliu-space",
@@ -35,9 +35,9 @@ this package is an app-utils for "hc mobile web app"
     "start": "serve public",
     "lint": "eslint"
   },
-  "main": "dist/app-utils.cjs.js",
-  "module": "dist/app-utils.esm.js",
-  "browser": "dist/app-utils.umd.js",
+  "main": "dist/dkal-app-utils.cjs.js",
+  "module": "dist/dkal-app-utils.esm.js",
+  "browser": "dist/dkal-app-utils.umd.js",
   "types": "src/index.d.ts",
   "type": "module",
   "files": [
@@ -71,7 +71,7 @@ this package is an app-utils for "hc mobile web app"
 
 # 3. 项目目录
 
-- app-utils/
+- dkal-app-utils/
   - dist/
   - example/
   - src/
@@ -129,7 +129,7 @@ import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
 
-const pkgName = 'app-utils'
+const pkgName = 'dkal-app-utils'
 
 export default defineConfig({
     input: './src/index.ts', // 入口文件
@@ -137,25 +137,25 @@ export default defineConfig({
         {
             format: 'cjs', // 打包为commonjs格式
             file: `dist/${pkgName}.cjs.js`, // 打包后的文件路径名称
-            name: 'appUtils', // 打包后的默认导出文件名称
+            name: 'dkalAppUtils', // 打包后的默认导出文件名称
             plugins: [terser()]
         },
         {
             format: 'esm', // 打包为esm格式
             file: `dist/${pkgName}.esm.js`,
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             plugins: [terser()]
         },
         {
             format: 'umd', // 打包为umd通用格式
             file: `dist/${pkgName}.umd.js`,
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             minifyInternalExports: true,
             plugins: [terser()]
         },
         // 打包给public展示demo目录使用
         {
-            name: 'appUtils',
+            name: 'dkalAppUtils',
             file: `public/${pkgName}.min.js`,
             format: 'iife',
             sourcemap: true,
