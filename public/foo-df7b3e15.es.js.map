@@ -1,0 +1,1 @@
+{"version":3,"file":"foo-df7b3e15.es.js","sources":["../src/foo.ts"],"sourcesContent":["export default 'this module is foo!!!'\n"],"names":["foo"],"mappings":"AAAA,IAAAA,EAAe"}
