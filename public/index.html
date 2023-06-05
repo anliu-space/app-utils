@@ -7,10 +7,12 @@
 </head>
 <body>
   <script type="module">
-      import {pluginName, testFoo} from './dkal-app-utils.es.js';
+      import {pluginName, testFoo, dateFormat} from './dkal-app-utils.es.js';
       window.onload = ()=>{
           console.log(pluginName());
+          console.log(dateFormat("2023-06-05 02:02:02","YYYY-MM-DD HH:mm:ss"))
           testFoo();
+
       };
   </script>
 </body>

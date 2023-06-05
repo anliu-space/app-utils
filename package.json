@@ -28,7 +28,8 @@
     "dist/*.js"
   ],
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "dayjs": "^1.11.8"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",

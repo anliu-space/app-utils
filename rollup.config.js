@@ -35,6 +35,10 @@ export default defineConfig({
             dir: 'dist',
             entryFileNames: `${pkgName}.[format].js`,
             chunkFileNames: "[name]-[hash].[format].js",
+            manualChunks: {
+                dayjs: ['dayjs'],
+                lodash: ['lodash']
+            },
             // plugins: [terser()]
         },
         {
@@ -44,6 +48,10 @@ export default defineConfig({
             dir: 'dist',
             entryFileNames: `${pkgName}.[format].js`,
             chunkFileNames: "[name]-[hash].[format].js",
+            manualChunks: {
+                dayjs: ['dayjs'],
+                lodash: ['lodash']
+            },
             // plugins: [terser()]
         },
         // {
@@ -64,6 +72,10 @@ export default defineConfig({
             entryFileNames: `${pkgName}.[format].js`,
             chunkFileNames: "[name]-[hash].[format].js",
             sourcemap: true,
+            manualChunks: {
+                dayjs: ['dayjs'],
+                lodash: ['lodash']
+            },
             banner,
             plugins: [terser()]
         }
@@ -90,5 +102,5 @@ export default defineConfig({
         }),
     ],
     // 视为外部依赖（不打入包内）
-    external: ['lodash']
+    // external: ['lodash']
 });
