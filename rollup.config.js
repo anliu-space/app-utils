@@ -9,15 +9,11 @@ import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
 import postcss from 'rollup-plugin-postcss';
-import postcssUrl from 'postcss-url';
-import monaco from 'rollup-plugin-monaco-editor';
-import fs from 'fs-extra';
 
 // Node 17.5+，你可以使用导入断言
 // import pkg from './package.json' assert { type: 'json' };
 // Node 旧版本
 import { createRequire } from 'node:module';
-import path from 'path';
 const require = createRequire(import.meta.url);
 const pkg = require('./package.json');
 
@@ -42,7 +38,6 @@ export default defineConfig({
         //     chunkFileNames: "[name]-[hash].[format].js",
         //     manualChunks: {
         //         dayjs: ['dayjs'],
-        //         // 'monaco-editor': ['monaco-editor'],
         //     },
         //     // plugins: [terser()]
         // },
@@ -55,7 +50,6 @@ export default defineConfig({
             chunkFileNames: "[name]-[hash].[format].js",
             manualChunks: {
                 dayjs: ['dayjs'],
-                // 'monaco-editor': ['monaco-editor'],
             },
             // plugins: [terser()]
         },
@@ -79,7 +73,6 @@ export default defineConfig({
             sourcemap: true,
             manualChunks: {
                 dayjs: ['dayjs'],
-                // 'monaco-editor': ['monaco-editor'],
             },
             banner,
             // plugins: [terser()]
@@ -87,15 +80,13 @@ export default defineConfig({
     ],
     plugins: [
         // 将CommonJS的模块转为ES模块
-        commonjs({
-            exclude: 'node_modules/monaco-editor/**'
-        }),
+        commonjs(),
         // 在commonjs之后
-        // babel({
-        //     babelHelpers: 'bundled',
-        //     // babel不转换外部依赖
-        //     exclude: ['node_modules/**'],
-        // }),
+        babel({
+            babelHelpers: 'bundled',
+            // babel不转换外部依赖
+            exclude: ['node_modules/**'],
+        }),
         clear({
             targets: ['dist'],
         }),
@@ -103,29 +94,7 @@ export default defineConfig({
         json(),
         nodeResolve(),
         // 编译css插件
-        postcss({
-            plugins: [
-                postcssUrl({
-                    url: (asset) => {
-                        if (!/\.ttf$/.test(asset.url)) return asset.url;
-                        // eslint-disable-next-line no-undef
-                        const distPath = path.join(process.cwd(), 'dist');
-                        const distFontsPath = path.join(distPath, 'fonts');
-                        fs.ensureDirSync(distFontsPath);
-                        const targetFontPath = path.join(distFontsPath, asset.pathname);
-                        fs.copySync(asset.absolutePath, targetFontPath);
-                        // eslint-disable-next-line no-undef
-                        const relativePath = path.relative(process.cwd(), targetFontPath);
-                        const publicPath = '/';
-                        return `${publicPath}${relativePath}`;
-                    },
-                }),
-            ],
-        }),
-        monaco({
-            // languages: ['json'],
-            pathPrefix: './dist',
-        }),
+        postcss(),
         eslint({
             // throwOnError: true, // 抛出异常并阻止打包
             include: ['src/**'],
@@ -134,5 +103,4 @@ export default defineConfig({
     ],
     // 视为外部依赖（不打入包内）
     // external: ['lodash']
-    // external: ['monaco-editor']
 });

@@ -1,6 +1,6 @@
 import { name, version } from '../package.json';
 import dayjs from 'dayjs';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import './style.css';
 
 // 测试foo模块
 const testFoo = ()=>{
@@ -8,13 +8,24 @@ const testFoo = ()=>{
 }
 
 // 测试monaco插件
-const testMonaco = () =>{
+const testMonaco = (codeStr?: string) =>{
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const $root = document.getElementById('container')!;
-    monaco.editor.create($root, {
-        value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-        language: 'javascript',
-    });
+    let editor;
+    if(codeStr!=null){
+        editor = (window as any).monaco.editor.create($root, {
+            value: ['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+            language: 'javascript',
+        });
+    }else{
+        editor = (window as any).monaco.editor.create($root, {
+            value: '// 请输入javascript代码',
+            language: 'javascript',
+        });
+    }
+
+    console.log(editor.getValue());
+    (window as any).eval(editor.getValue());
 }
 
 // 输出工具包名称
