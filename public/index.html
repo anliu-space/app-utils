@@ -6,13 +6,16 @@
     <title>DkalAppUtils Demo</title>
 </head>
 <body>
+<h2>Monaco Editor Sync Loading Sample</h2>
+<div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
   <script type="module">
-      import {pluginName, testFoo, dateFormat} from './dkal-app-utils.es.js';
+      import {testFoo,testMonaco,pluginInfo, dateFormat} from './dkal-app-utils.es.js';
       window.onload = ()=>{
-          console.log(pluginName());
-          console.log(dateFormat("2023-06-05 02:02:02","YYYY-MM-DD HH:mm:ss"))
+          console.log(pluginInfo());
+          console.log(dateFormat("2023-06-05 02:02:02","yyyy-MM-dd HH:mm:ss"))
+          console.log(dateFormat("2023-06-05 02:02:02","yyyy年MM月dd日 HH时mm分ss秒"))
           testFoo();
-
+          testMonaco();
       };
   </script>
 </body>

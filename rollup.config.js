@@ -8,6 +8,7 @@ import eslint from '@rollup/plugin-eslint';
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
+import postcss from 'rollup-plugin-postcss';
 
 // Node 17.5+，你可以使用导入断言
 // import pkg from './package.json' assert { type: 'json' };
@@ -37,7 +38,7 @@ export default defineConfig({
             chunkFileNames: "[name]-[hash].[format].js",
             manualChunks: {
                 dayjs: ['dayjs'],
-                lodash: ['lodash']
+                'monaco-editor': ['monaco-editor'],
             },
             // plugins: [terser()]
         },
@@ -50,7 +51,7 @@ export default defineConfig({
             chunkFileNames: "[name]-[hash].[format].js",
             manualChunks: {
                 dayjs: ['dayjs'],
-                lodash: ['lodash']
+                'monaco-editor': ['monaco-editor'],
             },
             // plugins: [terser()]
         },
@@ -74,15 +75,17 @@ export default defineConfig({
             sourcemap: true,
             manualChunks: {
                 dayjs: ['dayjs'],
-                lodash: ['lodash']
+                'monaco-editor': ['monaco-editor'],
             },
             banner,
-            plugins: [terser()]
+            // plugins: [terser()]
         }
     ],
     plugins: [
         // 将CommonJS的模块转为ES模块
-        commonjs(),
+        commonjs({
+            exclude: 'node_modules/monaco-editor/**'
+        }),
         // 在commonjs之后
         babel({
             babelHelpers: 'bundled',
@@ -95,6 +98,8 @@ export default defineConfig({
         typescript({ tsconfig: './tsconfig.json' }),
         json(),
         nodeResolve(),
+        // 编译css插件
+        postcss(),
         eslint({
             // throwOnError: true, // 抛出异常并阻止打包
             include: ['src/**'],
@@ -103,4 +108,5 @@ export default defineConfig({
     ],
     // 视为外部依赖（不打入包内）
     // external: ['lodash']
+    // external: ['monaco-editor']
 });

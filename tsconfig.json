@@ -1,5 +1,6 @@
 {
     "include": ["src/**/*/*.ts", "src/**/*.ts", "src/*.ts", "test/*.*.ts", "test/*/*.*.ts"],
+    "exclude": ["node_modules/**"],
     "output": "./dist/",
     "paths": {
         "src/*": ["src/*", "src/*/*"]
@@ -12,6 +13,9 @@
         "useUnknownInCatchVariables": false,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "lib": ["es2021"]
+        "lib": [
+            "es2021",
+            "dom"
+        ]
     }
 }

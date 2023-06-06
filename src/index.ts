@@ -1,15 +1,24 @@
 import { name, version } from '../package.json';
-import _ from 'lodash';
 import dayjs from 'dayjs';
+import * as monaco from 'monaco-editor';
+import './style.css';
 
 // 测试foo模块
 const testFoo = ()=>{
     import("./foo").then(({default: foo})=>console.log(foo));
-    console.log(_.max([1,2]));
+}
+
+// 测试monaco插件
+const testMonaco = () =>{
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    monaco.editor.create(document.getElementById('container')!, {
+        value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+        language: 'javascript'
+    });
 }
 
 // 输出工具包名称
-function pluginName():string {
+function pluginInfo():string {
     return `${name}(version: ${version})`;
 }
 
@@ -104,11 +113,7 @@ const mathDivision = (first: string, second: string)=>{
 // 日期时间格式化
 const dateFormat = (date: string, tpl: string)=>{
     let tmpTpl = tpl.replaceAll("y","Y");
-    tmpTpl = tpl.replaceAll("m","M");
-    tmpTpl = tpl.replaceAll("d","D");
-    tmpTpl = tpl.replaceAll("h","H");
-    tmpTpl = tpl.replaceAll("M","m");
-    tmpTpl = tpl.replaceAll("S","s");
+    tmpTpl = tmpTpl.replaceAll("d","D");
     return dayjs(date).format(tmpTpl);
 }
 
@@ -128,11 +133,12 @@ const timeDiff = (first: string, second: string)=>{
     const funName = ()=>{}
 **/
 
-
 // 工具方法开始 [->* end *<-]
 
 export {
-    testFoo, pluginName,
+    testFoo,
+    testMonaco,
+    pluginInfo,
     arrayFirst,
     arrayJoin,
     listAdd,
