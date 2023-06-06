@@ -1,7 +1,6 @@
 import { name, version } from '../package.json';
 import dayjs from 'dayjs';
-import * as monaco from 'monaco-editor';
-import './style.css';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 // 测试foo模块
 const testFoo = ()=>{
@@ -11,9 +10,10 @@ const testFoo = ()=>{
 // 测试monaco插件
 const testMonaco = () =>{
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    monaco.editor.create(document.getElementById('container')!, {
+    const $root = document.getElementById('container')!;
+    monaco.editor.create($root, {
         value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-        language: 'javascript'
+        language: 'javascript',
     });
 }
 
