@@ -5,7 +5,10 @@
  * Released under the MIT License.
  */
 
-import { d as dayjs } from './dayjs-8eed0759.es.js';
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+import { l as dayjs } from './dayjs-19c6a114.es.js';
+import { E as EditorView, r as basicSetup } from './codemirror-b829ae8b.es.js';
+import { j as javascript } from './codemirror-lan-2b6ad035.es.js';
 
 var name = "dkal-app-utils";
 var version = "1.0.1";
@@ -35,35 +38,72 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "#container {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n}\n";
+var css_248z = "#coder-container {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n    background-color: #fff;\n}\n#coder-editor {\n    width: 400px;\n    height: 400px;\n    border: 1px solid grey;\n}\n#coder-btn {\n    margin-top: 10px;\n}\n";
 styleInject(css_248z);
 
 // 测试foo模块
 var testFoo = function () {
-    import('./foo-5fd7f5d8.es.js').then(function (_a) {
+    import('./foo-9f5f2140.es.js').then(function (_a) {
         var foo = _a.default;
         return console.log(foo);
     });
 };
 // 测试monaco插件
-var testMonaco = function (codeStr) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    var $root = document.getElementById('container');
-    var editor;
-    if (codeStr != null) {
-        editor = window.monaco.editor.create($root, {
-            value: ['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-            language: 'javascript',
+// const testMonaco = (codeStr?: string) =>{
+//     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+//     const $root = document.getElementById('container')!;
+//     let editor;
+//     if(codeStr!=null){
+//         editor = (window as any).monaco.editor.create($root, {
+//             value: ['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+//             language: 'javascript',
+//         });
+//     }else{
+//         editor = (window as any).monaco.editor.create($root, {
+//             value: '// 请输入javascript代码',
+//             language: 'javascript',
+//         });
+//     }
+//
+//     console.log(editor.getValue());
+//     (window as any).eval(editor.getValue());
+// }
+// 存储编辑器的变量
+var coderEditor;
+var testCodemirror = function (code) {
+    var $body = document.body;
+    var $container = document.createElement("div");
+    var $coder = document.createElement("div");
+    var $btn = document.createElement("button");
+    $container.id = "coder-container";
+    $coder.id = "coder-editor";
+    $btn.id = "coder-btn";
+    $btn.textContent = "确定";
+    $container.appendChild($coder);
+    $container.appendChild($btn);
+    $body.insertBefore($container, $body.firstChild);
+    $btn.onclick = function () {
+        console.log(getCode());
+        $container.style.display = "none";
+    };
+    if (typeof code != 'string') {
+        coderEditor = new EditorView({
+            doc: "let a = 123;",
+            extensions: [basicSetup, javascript()],
+            parent: $coder
         });
     }
     else {
-        editor = window.monaco.editor.create($root, {
-            value: '// 请输入javascript代码',
-            language: 'javascript',
+        coderEditor = new EditorView({
+            doc: code,
+            extensions: [basicSetup, javascript()],
+            parent: $coder
         });
     }
-    console.log(editor.getValue());
-    window.eval(editor.getValue());
+};
+// 返回代码
+var getCode = function () {
+    return coderEditor.state.doc.toString();
 };
 // 输出工具包名称
 function pluginInfo() {
@@ -162,5 +202,5 @@ var timeDiff = function (first, second) {
     return Math.abs(+dayjs(first) - (+dayjs(second)));
 };
 
-export { arrayFirst, arrayJoin, dateFormat, dateParse, listAdd, listDelete, lowerCase, mathAdd, mathDivision, mathReduce, mathTake, pluginInfo, replaceAll, stringLength, testFoo, testMonaco, timeDiff, upperCase };
+export { arrayFirst, arrayJoin, dateFormat, dateParse, getCode, listAdd, listDelete, lowerCase, mathAdd, mathDivision, mathReduce, mathTake, pluginInfo, replaceAll, stringLength, testCodemirror, testFoo, timeDiff, upperCase };
 //# sourceMappingURL=dkal-app-utils.es.js.map

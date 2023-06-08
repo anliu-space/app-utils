@@ -9,6 +9,9 @@ import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
 import postcss from 'rollup-plugin-postcss';
+// 热更新
+import livereload from 'rollup-plugin-livereload';
+import serve from 'rollup-plugin-serve';
 
 // Node 17.5+，你可以使用导入断言
 // import pkg from './package.json' assert { type: 'json' };
@@ -70,7 +73,7 @@ export default defineConfig({
             format: 'es',
             name: 'dkalAppUtils',
             // file: `public/${pkgName}.min.js`,
-            dir: 'public',
+            dir: 'public/js',
             entryFileNames: `${pkgName}.[format].js`,
             chunkFileNames: "[name]-[hash].[format].js",
             sourcemap: true,
@@ -98,7 +101,7 @@ export default defineConfig({
             exclude: ['node_modules/**'],
         }),
         clear({
-            targets: ['dist'],
+            targets: ['dist','public/js'],
         }),
         typescript({ tsconfig: './tsconfig.json' }),
         json(),
@@ -115,6 +118,12 @@ export default defineConfig({
             entries: [
                 { find: '@', replacement: './src' },
             ]
+        }),
+        livereload(),
+        serve({
+            open: false,
+            port: 5400,
+            contentBase: ['public'],
         }),
     ],
     // 视为外部依赖（不打入包内）

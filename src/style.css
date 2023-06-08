@@ -1,6 +1,20 @@
-#container {
+#coder-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #fff;
+}
+#coder-editor {
+    width: 400px;
+    height: 400px;
+    border: 1px solid grey;
+}
+#coder-btn {
+    margin-top: 10px;
 }

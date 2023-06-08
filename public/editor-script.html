@@ -11,29 +11,25 @@
     />
 </head>
 <body>
-    <h2>Monaco Editor Sync Loading Sample</h2>
-    <div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
-  <script>
-      var require = { paths: { vs: './vs' } };
-  </script>
-  <script src="./vs/loader.js"></script>
-  <script src="./vs/editor/editor.main.nls.js"></script>
-  <script src="./vs/editor/editor.main.js"></script>
+<div id="root" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+<div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+<script>
+    var require = { paths: { vs: './vs' } };
+</script>
+<script src="./vs/loader.js"></script>
+<script src="./vs/editor/editor.main.nls.js"></script>
+<script src="./vs/editor/editor.main.js"></script>
 
-  <script>
-      var editor = monaco.editor.create(document.getElementById('container'), {
-          value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-          language: 'javascript'
-      });
-  </script>
-    <script type="module">
-        import {pluginInfo, testFoo, dateFormat} from './dkal-app-utils.es.js';
-        window.onload = ()=>{
-            console.log(pluginInfo());
-            console.log(dateFormat("2023-06-05 02:02:02","yyyy-MM-dd HH:mm:ss"))
-            console.log(dateFormat("2023-06-05 02:02:02","yyyy年MM月dd日 HH时mm分ss秒"))
-            testFoo();
-        };
-    </script>
+<script type="module">
+    import {testFoo,testMonaco,testCodemirror,pluginInfo, dateFormat} from './js/dkal-app-utils.es.js';
+    window.onload = ()=>{
+        console.log(pluginInfo());
+        console.log(dateFormat("2023-06-05 02:02:02","yyyy-MM-dd HH:mm:ss"))
+        console.log(dateFormat("2023-06-05 02:02:02","yyyy年MM月dd日 HH时mm分ss秒"))
+        testFoo();
+        testMonaco(['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'));
+        testCodemirror();
+    };
+</script>
 </body>
 </html>

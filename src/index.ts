@@ -1,6 +1,8 @@
 import { name, version } from '../package.json';
 import dayjs from 'dayjs';
-import './style.css';
+import '@/style.css';
+import {EditorView, basicSetup} from "codemirror";
+import {javascript} from "@codemirror/lang-javascript"
 
 // 测试foo模块
 const testFoo = ()=>{
@@ -8,24 +10,64 @@ const testFoo = ()=>{
 }
 
 // 测试monaco插件
-const testMonaco = (codeStr?: string) =>{
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const $root = document.getElementById('container')!;
-    let editor;
-    if(codeStr!=null){
-        editor = (window as any).monaco.editor.create($root, {
-            value: ['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-            language: 'javascript',
+// const testMonaco = (codeStr?: string) =>{
+//     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+//     const $root = document.getElementById('container')!;
+//     let editor;
+//     if(codeStr!=null){
+//         editor = (window as any).monaco.editor.create($root, {
+//             value: ['function xx() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+//             language: 'javascript',
+//         });
+//     }else{
+//         editor = (window as any).monaco.editor.create($root, {
+//             value: '// 请输入javascript代码',
+//             language: 'javascript',
+//         });
+//     }
+//
+//     console.log(editor.getValue());
+//     (window as any).eval(editor.getValue());
+// }
+
+// 存储编辑器的变量
+let coderEditor:EditorView;
+const testCodemirror = (code: string)=>{
+    const $body = document.body;
+    const $container = document.createElement("div");
+    const $coder = document.createElement("div");
+    const $btn = document.createElement("button");
+    $container.id = "coder-container";
+    $coder.id = "coder-editor";
+    $btn.id = "coder-btn";
+    $btn.textContent="确定";
+    $container.appendChild($coder);
+    $container.appendChild($btn);
+    $body.insertBefore($container, $body.firstChild);
+    $btn.onclick = ()=>{
+        console.log(getCode());
+        $container.style.display = "none";
+    };
+    if(typeof code != 'string'){
+        coderEditor = new EditorView({
+            doc: "let a = 123;",
+            extensions: [basicSetup,javascript()],
+            parent: $coder
         });
     }else{
-        editor = (window as any).monaco.editor.create($root, {
-            value: '// 请输入javascript代码',
-            language: 'javascript',
+        coderEditor = new EditorView({
+            doc: code,
+            extensions: [basicSetup,javascript()],
+            parent: $coder
         });
     }
 
-    console.log(editor.getValue());
-    (window as any).eval(editor.getValue());
+
+}
+
+// 返回代码
+const getCode = ()=>{
+    return coderEditor.state.doc.toString();
 }
 
 // 输出工具包名称
@@ -148,7 +190,9 @@ const timeDiff = (first: string, second: string)=>{
 
 export {
     testFoo,
-    testMonaco,
+    // testMonaco,
+    testCodemirror,
+    getCode,
     pluginInfo,
     arrayFirst,
     arrayJoin,
