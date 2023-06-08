@@ -70,7 +70,7 @@ export default defineConfig({
             format: 'es',
             name: 'dkalAppUtils',
             // file: `public/${pkgName}.min.js`,
-            dir: 'public',
+            dir: 'public/js',
             entryFileNames: `${pkgName}.[format].js`,
             chunkFileNames: "[name]-[hash].[format].js",
             sourcemap: true,

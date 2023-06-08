@@ -33,18 +33,20 @@ const banner = `
 export default defineConfig({
     input: './src/index.ts', // 入口文件
     output: [
-        // {
-        //     format: 'cjs', // 打包为commonjs格式
-        //     name: 'dkalAppUtils', // 打包后的默认导出文件名称
-        //     // file: `dist/${pkgName}.cjs.js`, // 打包后的文件路径名称
-        //     dir: 'dist',
-        //     entryFileNames: `${pkgName}.[format].js`,
-        //     chunkFileNames: "[name]-[hash].[format].js",
-        //     manualChunks: {
-        //         dayjs: ['dayjs'],
-        //     },
-        //     // plugins: [terser()]
-        // },
+        {
+            format: 'cjs', // 打包为commonjs格式
+            name: 'dkalAppUtils', // 打包后的默认导出文件名称
+            // file: `dist/${pkgName}.cjs.js`, // 打包后的文件路径名称
+            dir: 'dist',
+            entryFileNames: `${pkgName}.[format].js`,
+            chunkFileNames: "[name]-[hash].[format].js",
+            manualChunks: {
+                dayjs: ['dayjs'],
+            codemirror: ['codemirror'],
+            'codemirror-lan': ['@codemirror/lang-javascript'],
+            },
+            // plugins: [terser()]
+        },
         {
             format: 'esm', // 打包为esm格式
             name: 'dkalAppUtils',// 当为iife和umd的时候，window.dkalAppUtils =
@@ -98,8 +100,10 @@ export default defineConfig({
         babel({
             babelHelpers: 'bundled',
             // babel不转换外部依赖
+            // 仅仅转译我们的源码
             exclude: ['node_modules/**'],
         }),
+        // 每次构建清理文件夹
         clear({
             targets: ['dist','public/js'],
         }),
