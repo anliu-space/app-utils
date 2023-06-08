@@ -6,8 +6,6 @@ import {javascript} from "@codemirror/lang-javascript"
 
 // 测试foo模块
 const testFoo = ()=>{
-    const {a, b} = {a: 1, b: 2};
-    console.log(a, b);
     import("./foo").then(({default: foo})=>console.log(foo));
 }
 
